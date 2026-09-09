@@ -38,15 +38,10 @@ export default function PlatformSelector({
   showPairingHint,
   className,
 }: PlatformSelectorProps) {
-  const isAndroidSelected = selected.includes("android");
-  const hasDesktopSelected = selected.some((p) =>
-    ["macos", "windows", "linux"].includes(p)
-  );
-
   const shouldShowHint =
     showPairingHint !== undefined
       ? showPairingHint
-      : selected.length === 1 || (isAndroidSelected && !hasDesktopSelected);
+      : selected.length === 1;
 
   return (
     <div className={`flex flex-col ${className ?? ""}`}>
@@ -69,7 +64,7 @@ export default function PlatformSelector({
               key={platform.id}
               type="button"
               onClick={() => onToggle(platform.id)}
-              className={`flex h-24 sm:h-26 flex-col items-center justify-center gap-2 rounded-2xl sm:rounded-3xl border transition-all duration-150 select-none cursor-pointer active:scale-[0.98] ${
+              className={`flex h-24 sm:h-26 flex-col items-center justify-center gap-2 rounded-2xl sm:rounded-3xl border transition-all duration-150 select-none cursor-pointer active:scale-[0.98] outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0 ${
                 isSelected
                   ? "border-white bg-white text-[#181819] font-medium shadow-md"
                   : "border-transparent bg-[#28292b] text-[#8f9296] hover:bg-[#323437] hover:text-white"
@@ -110,19 +105,15 @@ export default function PlatformSelector({
               },
             }}
             className="overflow-hidden">
-            <div className="pt-3">
-              <div className="rounded-2xl sm:rounded-3xl bg-[#28292b] p-4 sm:p-5 flex items-start gap-3.5">
-                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#202124] text-[#4b93ff]">
-                  <FaCircleInfo className="h-5 w-5" />
-                </div>
+            <div className="pt-5">
+              <div className="rounded-2xl sm:rounded-3xl bg-[#28292b] p-4 sm:p-5 flex items-start gap-3 sm:gap-3.5">
+                <FaCircleInfo className="h-5 w-5 text-[#4b93ff] shrink-0 mt-0.5" />
                 <div className="text-left">
                   <p className="text-sm sm:text-base font-medium text-white">
-                    Desktop Pairing Recommended
+                    Two or More Devices Recommended
                   </p>
                   <p className="text-sm sm:text-base text-zinc-300 mt-1 leading-relaxed">
-                    Cross-device clipboard &amp; input synchronization requires
-                    testing Android together with at least one desktop OS (macOS,
-                    Windows, or Linux).
+                    Testing Copynsync requires at least two devices. Select all the platforms you use so you can test across devices and experience the full ecosystem.
                   </p>
                 </div>
               </div>

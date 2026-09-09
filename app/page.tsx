@@ -143,7 +143,7 @@ export default function Home() {
     const targetY = formElement.offsetTop;
     const startY = container.scrollTop;
     const distance = targetY - startY;
-    const duration = 750; // 750ms luxurious easing
+    const duration = 500; // 750ms luxurious easing
     let startTime: number | null = null;
 
     const step = (currentTime: number) => {

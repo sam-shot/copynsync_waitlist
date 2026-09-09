@@ -37,19 +37,17 @@ export default function WhatsAppToggle({
             onToggle(!joinWhatsApp);
           }
         }}
-        className="group flex cursor-pointer items-center justify-between gap-4 select-none focus:outline-none">
+        className="group flex cursor-pointer items-center justify-between gap-4 select-none outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0">
         {/* Left: Icon & Description */}
-        <div className="flex items-center gap-3.5 sm:gap-4">
-          <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-[#202124] text-[#8f9296] group-hover:text-white transition-colors">
-            <FaWhatsapp className="h-5 w-5 sm:h-6 sm:w-6" />
-          </div>
+        <div className="flex items-center gap-3 sm:gap-3.5">
+          <FaWhatsapp className="h-6 w-6 sm:h-7 sm:w-7 shrink-0 text-[#25d366]" />
 
           <div className="text-left">
             <p className="text-sm sm:text-base font-medium tracking-tight text-white">
               Join WhatsApp Testing Group
             </p>
             <p className="text-xs sm:text-sm text-[#8f9296] leading-snug mt-0.5">
-              14-day daily cohort feedback &amp; release chat
+              Daily testing feedback &amp; beta release chat
             </p>
           </div>
         </div>
@@ -97,7 +95,7 @@ export default function WhatsAppToggle({
             <div className="pt-4 mt-4 border-t border-white/[0.06] flex flex-col gap-3">
               {/* Visual Hierarchy: Context first, so users know why their number is requested */}
               <p className="text-sm text-[#8f9296] leading-relaxed select-none">
-                We will send an invitation link to the private WhatsApp cohort group before testing starts.
+                We will send an invitation link to the private WhatsApp tester group before testing starts.
               </p>
 
               <div>

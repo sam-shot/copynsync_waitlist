@@ -4,13 +4,92 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 
+import { motion, AnimatePresence } from "framer-motion";
+import { Copy, Zap, Bell, MousePointerClick, History } from "lucide-react";
+
 interface CTAProps {
   onApplyClick?: () => void;
   scrolled?: boolean;
 }
 
+const ROTATING_FEATURES = [
+  {
+    icon: Copy,
+    line1: "copy & paste instantly,",
+    line2: "paste everywhere you work.",
+  },
+  {
+    icon: Zap,
+    line1: "transfer files at high speed,",
+    line2: "at full router throughput.",
+  },
+  {
+    icon: Bell,
+    line1: "mirror phone notifications,",
+    line2: "straight to your desktop.",
+  },
+  {
+    icon: MousePointerClick,
+    line1: "share mouse & keyboard,",
+    line2: "control multiple computers.",
+  },
+  {
+    icon: History,
+    line1: "search your sync history,",
+    line2: "find anything in milliseconds.",
+  },
+];
+
+const containerVariants = {
+  initial: {},
+  animate: {
+    transition: {
+      staggerChildren: 0.032,
+    },
+  },
+  exit: {
+    transition: {
+      staggerChildren: 0,
+    },
+  },
+};
+
+const wordVariants = {
+  initial: {
+    opacity: 0,
+    y: 22,
+    filter: "blur(8px)",
+  },
+  animate: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: {
+      duration: 0.38,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -18,
+    filter: "blur(6px)",
+    transition: {
+      duration: 0.16,
+      ease: [0.32, 0, 0.67, 0],
+    },
+  },
+};
+
 export default function CTA({ onApplyClick, scrolled: externalScrolled }: CTAProps) {
   const [internalScrolled, setInternalScrolled] = useState(false);
+  const [featureIndex, setFeatureIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setFeatureIndex((prev) => (prev + 1) % ROTATING_FEATURES.length);
+    }, 3200);
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     if (externalScrolled !== undefined) return;
@@ -25,6 +104,8 @@ export default function CTA({ onApplyClick, scrolled: externalScrolled }: CTAPro
   }, [externalScrolled]);
 
   const scrolled = externalScrolled !== undefined ? externalScrolled : internalScrolled;
+  const CurrentFeature = ROTATING_FEATURES[featureIndex];
+  const CurrentIcon = CurrentFeature.icon;
 
   return (
     <section className="relative flex h-[100dvh] w-full flex-col items-center justify-center pt-[60px] pb-6 px-5 sm:px-6 lg:px-8 select-none">
@@ -42,21 +123,62 @@ export default function CTA({ onApplyClick, scrolled: externalScrolled }: CTAPro
           />
         </div>
 
-        {/* Display Headline */}
-        <div className="space-y-1 mb-3 sm:mb-4">
-          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-white leading-[1.12]">
-            Your clipboard, <br />
-            <span className="bg-gradient-to-b from-[#6ca8ff] to-[#256beb] bg-clip-text text-transparent">
-              everywhere you work.
+        {/* Display Headline: Tagline + Strictly 2-Line Dynamic Blue Text with Parallax (Reduced Line Height) */}
+        <div className="w-full mb-3 sm:mb-4 flex flex-col items-center text-center">
+          <h1 className="text-[1.4rem] xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight text-white leading-[1.08] text-center w-full flex flex-col items-center">
+            <span className="block w-full text-center whitespace-nowrap">Your devices in sync,</span>
+            <span className="block w-full text-center min-h-[2.2em] pb-1">
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={featureIndex}
+                  variants={containerVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  className="w-full flex flex-col items-center justify-center text-center">
+                  {/* Blue Line 1 (with inline icon, centered, tight) */}
+                  <span className="inline-flex items-center justify-center text-center whitespace-nowrap">
+                    <motion.span
+                      variants={wordVariants}
+                      className="inline-block align-[-0.08em] mr-2 sm:mr-3 md:mr-3.5">
+                      <CurrentIcon className="h-[0.82em] w-[0.82em] text-[#6ca8ff] stroke-[2.4]" />
+                    </motion.span>
+                    {CurrentFeature.line1.split(" ").map((word, i) => (
+                      <motion.span
+                        key={`l1-${i}`}
+                        variants={wordVariants}
+                        className="inline-block mr-[0.28em] bg-gradient-to-b from-[#6ca8ff] to-[#256beb] bg-clip-text text-transparent pb-1">
+                        {word}
+                      </motion.span>
+                    ))}
+                  </span>
+
+                  {/* Blue Line 2 (strictly on its own line, centered, tight) */}
+                  <span className="inline-flex items-center justify-center text-center whitespace-nowrap">
+                    {CurrentFeature.line2.split(" ").map((word, i) => (
+                      <motion.span
+                        key={`l2-${i}`}
+                        variants={wordVariants}
+                        className="inline-block mr-[0.28em] bg-gradient-to-b from-[#6ca8ff] to-[#256beb] bg-clip-text text-transparent pb-1">
+                        {word}
+                      </motion.span>
+                    ))}
+                  </span>
+                </motion.span>
+              </AnimatePresence>
             </span>
           </h1>
         </div>
 
-        {/* Clean Secondary Subtitle */}
+        {/* Product Focused Secondary Subtitle */}
         <div>
-          <p className="mx-auto max-w-xl text-sm sm:text-base md:text-lg text-[#8f9296] font-normal leading-relaxed">
-            Instant, peer-to-peer clipboard synchronization across Android, macOS, Windows, and Linux.
-            Join our 14-day cohort for <strong className="font-medium text-white">free Pro access</strong> during testing plus a <strong className="font-medium text-white">1-month Pro license</strong> on launch.
+          <p className="mx-auto max-w-2xl text-sm sm:text-base md:text-lg text-[#b2b6bd] font-normal leading-relaxed">
+            Copynsync connects Android, Mac, Windows, and Linux over your local network so all your devices feel like one.{" "}
+            <span className="text-white font-semibold">Copy</span> on your phone and{" "}
+            <span className="text-white font-semibold">paste</span> on your computer,{" "}
+            <span className="text-white font-semibold">transfer</span> large files at full Wi-Fi speed without the internet,{" "}
+            <span className="text-white font-semibold">mirror</span> notifications, and{" "}
+            <span className="text-white font-semibold">share</span> your mouse across screens, all 100% private over your local network.
           </p>
         </div>
       </div>

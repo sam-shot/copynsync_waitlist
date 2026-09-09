@@ -8,15 +8,16 @@ export default function Footer() {
       <div className="flex flex-col items-center gap-2.5 sm:gap-3">
         {/* Main Display Headline */}
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-white leading-snug">
-          Your clipboard,{" "}
+          The unified peer-to-peer ecosystem{" "}
+          <br className="hidden sm:inline" />
           <span className="bg-gradient-to-b from-[#6ca8ff] to-[#256beb] bg-clip-text text-transparent">
-            everywhere you work.
+            for all your devices.
           </span>
         </h2>
 
-        {/* Supporting info text */}
-        <p className="max-w-md text-sm sm:text-base text-[#8f9296] font-normal leading-relaxed">
-          Instant, peer-to-peer clipboard synchronization across all your devices.
+        {/* Comprehensive supporting info text */}
+        <p className="max-w-2xl text-sm sm:text-base text-[#8f9296] font-normal leading-relaxed">
+          Copynsync connects Android, macOS, Windows, and Linux into a single local workspace. Sync your clipboard instantly, stream files at full router speeds, mirror phone notifications to your desktop, and share your mouse and keyboard across screens, completely private, encrypted, over the Local network.
         </p>
 
         {/* Built with ❤️ attribution */}
@@ -24,11 +25,11 @@ export default function Footer() {
           <p className="text-xs sm:text-sm text-[#5a5d63]">
             Built with ❤️ by{" "}
             <Link
-              href="https://x.com/samshot01"
+              href="https://x.com/samshot_01"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#8f9296] hover:text-white transition-colors underline underline-offset-4 decoration-white/20 hover:decoration-white">
-              samshot01
+              samshot_01
             </Link>
           </p>
         </div>

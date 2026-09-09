@@ -66,23 +66,23 @@ export default function SuccessDialog({ open, onClose }: SuccessDialogProps) {
               onClick={onClose}
               type="button"
               aria-label="Close dialog"
-              className="absolute top-4 sm:top-5 right-4 sm:right-5 h-8 w-8 rounded-full bg-white/5 hover:bg-white/10 text-[#8f9296] hover:text-white flex items-center justify-center transition-colors">
+              className="absolute top-4 sm:top-5 right-4 sm:right-5 h-8 w-8 rounded-full bg-white/5 hover:bg-white/10 text-[#8f9296] hover:text-white flex items-center justify-center transition-colors outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0">
               <FaXmark className="h-4 w-4" />
             </button>
 
             {/* App Icon - Direct White SVG */}
             <div className="my-3 flex items-center justify-center">
-              <CopynsyncIcon className="h-16 w-16 text-white" />
+              <CopynsyncIcon className="h-12 w-12 text-white" />
             </div>
 
             {/* Headline */}
             <h3 className="text-2xl sm:text-3xl font-semibold tracking-tight text-white mb-2.5">
-              You&apos;re in the cohort!
+              Application Received!
             </h3>
 
-            {/* Message telling them an email is coming very soon */}
-            <p className="text-sm sm:text-base text-[#8f9296] font-normal leading-relaxed mb-6">
-              We&apos;ve reserved your closed beta spot. You will receive an onboarding email very soon with your download links and test access.
+            {/* Message clarifying that downloads and invites arrive within the week */}
+            <p className="text-sm sm:text-base text-[#d4d7dc] font-normal leading-relaxed mb-6">
+              We&apos;ve reserved your closed beta spot. As soon as the test build is ready <span className="text-white font-medium">(within the week)</span>, you&apos;ll receive an onboarding email with your download links, test access, and WhatsApp group invite.
             </p>
 
             {/* Action Button: Rounded-full pill */}

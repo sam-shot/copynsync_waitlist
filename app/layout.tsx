@@ -13,9 +13,9 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "Copynsync v2 — Testing Waitlist",
+  title: "Copynsync v2 — Closed Beta Testing",
   description:
-    "Join the 14-day closed testing cohort for Copynsync v2. Cross-platform universal clipboard and input sync for Android and Desktop.",
+    "Apply for closed beta testing for Copynsync v2. Peer-to-peer clipboard sync, high-speed file transfers, notification mirroring, and input sharing across Android, macOS, Windows, and Linux.",
 };
 
 export default function RootLayout({
@@ -31,7 +31,7 @@ export default function RootLayout({
       <meta property="og:image:height" content="832" />
       <meta
         property="og:site_name"
-        content="Copynsync — Closed Testing Cohort"
+        content="Copynsync — Closed Beta Testing"
       />
       <meta
         property="og:url"

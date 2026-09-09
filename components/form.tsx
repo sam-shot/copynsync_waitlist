@@ -49,10 +49,46 @@ export default function Form({
   return (
     <div className="w-full max-w-xl md:max-w-2xl select-none">
       {/* Section Header */}
-      <div className="text-center mb-6 sm:mb-8">
+      <div className="text-center mb-5 sm:mb-6 flex flex-col items-center">
         <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-white">
           Apply for Closed Beta Access
         </h2>
+        <p className="mt-2 max-w-xl text-sm sm:text-base text-[#aeb2b8] font-normal leading-relaxed">
+          Help us test and refine Copynsync before public release. In exchange for your daily testing and feedback, you&apos;ll receive full Pro privileges.
+        </p>
+      </div>
+
+      {/* Testing Expectations & Perks - High-Contrast Apple/Muse Style Cards */}
+      <div className="mb-6 sm:mb-8 grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4 text-left">
+        {/* Requirement Card */}
+        <div className="bg-[#242528] rounded-2xl sm:rounded-3xl p-6 sm:p-7 shadow-sm flex flex-col justify-between transition-colors duration-200 hover:bg-[#27282c]">
+          <div>
+            <span className="inline-block text-xs font-semibold tracking-wider uppercase text-[#6ca8ff] mb-2">
+              Google Play Requirement
+            </span>
+            <h3 className="text-lg sm:text-xl font-semibold tracking-tight text-white mb-2.5">
+              14-Day Daily Testing
+            </h3>
+            <p className="text-sm sm:text-base text-[#d4d7dc] leading-relaxed">
+              Open and test Copynsync daily across your devices for <span className="text-white font-medium">14 continuous days</span> to help us satisfy Google Play closed testing requirements.
+            </p>
+          </div>
+        </div>
+
+        {/* Perks Card */}
+        <div className="bg-[#242528] rounded-2xl sm:rounded-3xl p-6 sm:p-7 shadow-sm flex flex-col justify-between transition-colors duration-200 hover:bg-[#27282c]">
+          <div>
+            <span className="inline-block text-xs font-semibold tracking-wider uppercase text-[#6ca8ff] mb-2">
+              Tester Reward
+            </span>
+            <h3 className="text-lg sm:text-xl font-semibold tracking-tight text-white mb-2.5">
+              Free Pro Access + License
+            </h3>
+            <p className="text-sm sm:text-base text-[#d4d7dc] leading-relaxed">
+              Enjoy <span className="text-white font-medium">full, unrestricted Pro access</span> throughout the entire testing period, plus a <span className="text-white font-medium">free 1-month Pro license</span> upon public launch.
+            </p>
+          </div>
+        </div>
       </div>
 
       <form
@@ -114,7 +150,7 @@ export default function Form({
             size="lg"
             fullWidth
             loading={loading}>
-            Join the Testing Cohort
+            Apply for Beta Access
           </Button>
         </div>
       </form>
