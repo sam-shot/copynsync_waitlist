@@ -47,7 +47,7 @@ export default function Form({
   errors,
 }: FormProps) {
   return (
-    <div className="w-full max-w-xl md:max-w-2xl">
+    <div className="w-full max-w-xl md:max-w-2xl select-none">
       {/* Section Header */}
       <div className="text-center mb-6 sm:mb-8">
         <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-white">

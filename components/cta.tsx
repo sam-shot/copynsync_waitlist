@@ -46,7 +46,7 @@ export default function CTA({ onApplyClick, scrolled: externalScrolled }: CTAPro
         <div className="space-y-1 mb-3 sm:mb-4">
           <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-white leading-[1.12]">
             Your clipboard, <br />
-            <span className="text-[#4b93ff]">
+            <span className="bg-gradient-to-b from-[#6ca8ff] to-[#256beb] bg-clip-text text-transparent">
               everywhere you work.
             </span>
           </h1>

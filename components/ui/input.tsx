@@ -45,7 +45,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             type={type}
             ref={ref}
             className={cn(
-              "h-[54px] w-full rounded-full border bg-[#28292b] px-6 text-base text-white placeholder:text-[#8f9296] transition-colors focus:outline-none",
+              "h-[54px] w-full rounded-full border bg-[#28292b] px-6 text-base text-white placeholder:text-[#8f9296] transition-colors focus:outline-none select-text",
               leadingIcon && "pl-12",
               error
                 ? "border-red-500/80 focus:border-red-500 focus:ring-1 focus:ring-red-500"

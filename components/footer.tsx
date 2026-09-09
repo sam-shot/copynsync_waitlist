@@ -9,7 +9,7 @@ export default function Footer() {
         {/* Main Display Headline */}
         <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold tracking-tight text-white leading-snug">
           Your clipboard,{" "}
-          <span className="text-[#4b93ff]">
+          <span className="bg-gradient-to-b from-[#6ca8ff] to-[#256beb] bg-clip-text text-transparent">
             everywhere you work.
           </span>
         </h2>
