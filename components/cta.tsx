@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
 
 interface CTAProps {
   onApplyClick?: () => void;
@@ -61,27 +62,30 @@ export default function CTA({ onApplyClick, scrolled: externalScrolled }: CTAPro
       </div>
 
       {/* Muse AI Style Elevated Button: Anchored at the bottom of 100dvh, borderless, disappears smoothly on scroll */}
-      <button
+      <Button
+        variant="elevated"
+        size="md"
         onClick={onApplyClick}
         type="button"
-        className={`fixed inset-x-0 bottom-6 sm:bottom-8 z-30 mx-auto w-fit group inline-flex items-center gap-1.5 rounded-full bg-[#28292d]/90 hover:bg-[#34353a] active:bg-[#202124] backdrop-blur-[16px] px-5 h-10 text-sm font-medium text-white shadow-[0_1px_0_0_rgba(255,255,255,0.18)_inset,0_4px_16px_0_rgba(0,0,0,0.35)] select-none transition-all duration-200 ease-out active:scale-[0.98] ${
+        trailingIcon={
+          <svg
+            className="h-4 w-4 text-white/80 transition-transform duration-150 group-hover:translate-y-0.5"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round">
+            <path d="m6 9 6 6 6-6" />
+          </svg>
+        }
+        className={`fixed inset-x-0 bottom-6 sm:bottom-8 z-30 mx-auto group transition-all duration-200 ease-out ${
           scrolled
             ? "opacity-0 pointer-events-none translate-y-2"
             : "opacity-100 pointer-events-auto translate-y-0"
         }`}>
-        <span>Apply for Closed Beta</span>
-        <svg
-          className="h-4 w-4 text-white/80 transition-transform duration-150 group-hover:translate-y-0.5"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round">
-          <path d="m6 9 6 6 6-6" />
-        </svg>
-      </button>
+        Apply for Closed Beta
+      </Button>
     </section>
   );
 }
-

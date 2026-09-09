@@ -1,7 +1,6 @@
 import "./globals.css";
 import type { Metadata, Viewport } from "next";
 import { Figtree } from "next/font/google";
-import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
 
 const FigtreeFont = Figtree({ subsets: ["latin"] });
@@ -32,11 +31,11 @@ export default function RootLayout({
       <meta property="og:image:height" content="832" />
       <meta
         property="og:site_name"
-        content="Next.js + Notion — Waitlist Template"
+        content="Copynsync — Closed Testing Cohort"
       />
       <meta
         property="og:url"
-        content="https://nextjs-notion-waitlist.vercel.app/"
+        content="https://copynsync.com"
       />
       <meta name="twitter:image" content="/twitter-image.png" />
       <meta name="twitter:image:type" content="image/png" />
@@ -44,7 +43,6 @@ export default function RootLayout({
       <meta name="twitter:image:height" content="832" />
       <body className={FigtreeFont.className}>
         {children}
-        <Toaster position="top-center" />
         <Analytics />
       </body>
     </html>

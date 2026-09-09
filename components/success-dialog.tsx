@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaXmark } from "react-icons/fa6";
 import Confetti from "@/components/ui/confetti";
 import CopynsyncIcon from "@/components/copynsync-icon";
+import { Button } from "@/components/ui/button";
 
 interface SuccessDialogProps {
   open: boolean;
@@ -60,7 +61,6 @@ export default function SuccessDialog({ open, onClose }: SuccessDialogProps) {
             exit={{ opacity: 0, scale: 0.95, y: 12 }}
             transition={{ type: "spring", damping: 25, stiffness: 350 }}
             className="relative z-10 w-full max-w-md rounded-3xl sm:rounded-[32px] bg-[#242528] p-7 sm:p-8 shadow-2xl text-center flex flex-col items-center">
-            
             {/* Close Button in Top-Right */}
             <button
               onClick={onClose}
@@ -86,12 +86,14 @@ export default function SuccessDialog({ open, onClose }: SuccessDialogProps) {
             </p>
 
             {/* Action Button: Rounded-full pill */}
-            <button
+            <Button
+              variant="primary"
+              size="lg"
+              fullWidth
               onClick={onClose}
-              type="button"
-              className="w-full h-[52px] rounded-full bg-[#4b93ff] hover:bg-[#3d84f5] active:bg-[#3277e6] text-white font-medium text-base shadow-sm transition-all duration-150">
+              type="button">
               Got it
-            </button>
+            </Button>
           </motion.div>
         </div>
       )}
