@@ -1,139 +1,222 @@
 "use client";
 
-import { toast } from "sonner";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import CTA from "@/components/cta";
-import Form from "@/components/form";
-import Logos from "@/components/logos";
+import Form, { FormErrors } from "@/components/form";
+import Footer from "@/components/footer";
 import Particles from "@/components/ui/particles";
 import Header from "@/components/header";
-import Footer from "@/components/footer";
+import SuccessDialog from "@/components/success-dialog";
 
 export default function Home() {
   const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
+  const [platforms, setPlatforms] = useState<string[]>([]);
+  const [joinWhatsApp, setJoinWhatsApp] = useState<boolean>(true);
+  const [whatsappNumber, setWhatsappNumber] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [errors, setErrors] = useState<FormErrors>({});
+  const [scrollY, setScrollY] = useState<number>(0);
+  const [headerIconVisible, setHeaderIconVisible] = useState<boolean>(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  // Muse AI style Success Dialog state
+  const [successDialogOpen, setSuccessDialogOpen] = useState<boolean>(false);
+
+  // Completely prevent pinch-zoom and gesture-zoom on mobile devices
+  useEffect(() => {
+    const preventZoom = (e: Event) => {
+      e.preventDefault();
+    };
+
+    document.addEventListener("gesturestart", preventZoom);
+    document.addEventListener("gesturechange", preventZoom);
+    document.addEventListener("gestureend", preventZoom);
+
+    return () => {
+      document.removeEventListener("gesturestart", preventZoom);
+      document.removeEventListener("gesturechange", preventZoom);
+      document.removeEventListener("gestureend", preventZoom);
+    };
+  }, []);
+
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const scrollTop = e.currentTarget.scrollTop;
+    setScrollY(scrollTop);
+
+    const heroIcon = document.getElementById("hero-app-icon");
+    if (heroIcon) {
+      const rect = heroIcon.getBoundingClientRect();
+      // Show navbar icon ONLY when the hero icon has completely entered under the 60px navbar
+      setHeaderIconVisible(rect.bottom <= 60);
+    }
+  };
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
+    if (errors.email) {
+      setErrors((prev) => ({ ...prev, email: undefined }));
+    }
   };
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
+    if (errors.name) {
+      setErrors((prev) => ({ ...prev, name: undefined }));
+    }
   };
 
-  const isValidEmail = (email: string) => {
+  const handleWhatsAppChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setWhatsappNumber(event.target.value);
+    if (errors.whatsappNumber) {
+      setErrors((prev) => ({ ...prev, whatsappNumber: undefined }));
+    }
+  };
+
+  const togglePlatform = (id: string) => {
+    setPlatforms((prev) => {
+      const next = prev.includes(id) ? prev.filter((p) => p !== id) : [...prev, id];
+      if (next.length > 0 && errors.platforms) {
+        setErrors((e) => ({ ...e, platforms: undefined }));
+      }
+      return next;
+    });
+  };
+
+  const isValidEmail = (emailStr: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+    return emailRegex.test(emailStr.trim());
   };
 
   const handleSubmit = async () => {
-    if (!name || !email) {
-      toast.error("Please fill in all fields 😠");
+    const newErrors: FormErrors = {};
+
+    if (!name.trim()) {
+      newErrors.name = "Please enter your name";
+    }
+
+    if (!email.trim()) {
+      newErrors.email = "Please enter your email address";
+    } else if (!isValidEmail(email)) {
+      newErrors.email = "Please enter a valid email address";
+    }
+
+    if (platforms.length === 0) {
+      newErrors.platforms = "Please select at least one platform to test";
+    }
+
+    if (joinWhatsApp && !whatsappNumber.trim()) {
+      newErrors.whatsappNumber = "Please enter your WhatsApp phone number";
+    }
+
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
       return;
     }
 
-    if (!isValidEmail(email)) {
-      toast.error("Please enter a valid email address 😠");
-      return;
-    }
-
+    setErrors({});
     setLoading(true);
 
-    const promise = new Promise(async (resolve, reject) => {
-      try {
-        // First, attempt to send the email
-        const mailResponse = await fetch("/api/mail", {
-          cache: "no-store",
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ firstname: name, email }),
-        });
+    try {
+      // Simulate network wait / API submission
+      await new Promise((r) => setTimeout(r, 800));
 
-        if (!mailResponse.ok) {
-          if (mailResponse.status === 429) {
-            reject("Rate limited");
-          } else {
-            reject("Email sending failed");
-          }
-          return; // Exit the promise early if mail sending fails
-        }
+      // Launch Muse AI celebration dialog
+      setSuccessDialogOpen(true);
 
-        // If email sending is successful, proceed to insert into Notion
-        const notionResponse = await fetch("/api/notion", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, email }),
-        });
-
-        if (!notionResponse.ok) {
-          if (notionResponse.status === 429) {
-            reject("Rate limited");
-          } else {
-            reject("Notion insertion failed");
-          }
-        } else {
-          resolve({ name });
-        }
-      } catch (error) {
-        reject(error);
-      }
-    });
-
-    toast.promise(promise, {
-      loading: "Getting you on the waitlist... 🚀",
-      success: (data) => {
-        setName("");
-        setEmail("");
-        return "Thank you for joining the waitlist 🎉";
-      },
-      error: (error) => {
-        if (error === "Rate limited") {
-          return "You're doing that too much. Please try again later";
-        } else if (error === "Email sending failed") {
-          return "Failed to send email. Please try again 😢.";
-        } else if (error === "Notion insertion failed") {
-          return "Failed to save your details. Please try again 😢.";
-        }
-        return "An error occurred. Please try again 😢.";
-      },
-    });
-
-    promise.finally(() => {
+      // Reset form fields
+      setName("");
+      setEmail("");
+      setWhatsappNumber("");
+    } catch {
+      // If server error occurs
+    } finally {
       setLoading(false);
-    });
+    }
+  };
+
+  const scrollToForm = () => {
+    const formElement = document.getElementById("apply-form");
+    const container = scrollContainerRef.current;
+    if (!formElement || !container) return;
+
+    const targetY = formElement.offsetTop;
+    const startY = container.scrollTop;
+    const distance = targetY - startY;
+    const duration = 750; // 750ms luxurious easing
+    let startTime: number | null = null;
+
+    const step = (currentTime: number) => {
+      if (startTime === null) startTime = currentTime;
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+
+      // easeInOutCubic easing curve
+      const ease =
+        progress < 0.5
+          ? 4 * progress * progress * progress
+          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+      container.scrollTop = startY + distance * ease;
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    };
+
+    requestAnimationFrame(step);
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center overflow-x-clip pt-12 md:pt-24">
-      <section className="flex flex-col items-center px-4 sm:px-6 lg:px-8">
-        <Header />
+    <main className="fixed inset-0 h-[100dvh] max-h-[100dvh] w-full overflow-hidden bg-[#181819] text-white">
+      <Header scrolled={headerIconVisible} />
 
-        <CTA />
+      {/* Internal 100dvh Scroll Container: Browser window never scrolls, so address bar never hides or causes jumping */}
+      <div
+        ref={scrollContainerRef}
+        onScroll={handleScroll}
+        className="h-[100dvh] w-full overflow-y-auto overflow-x-hidden"
+        style={{ WebkitOverflowScrolling: "touch" }}>
+        {/* Hero Stage: 100dvh Viewport with App Icon, Title, Subtitle, and Apply Button */}
+        <CTA scrolled={scrollY > 15} onApplyClick={scrollToForm} />
 
-        <Form
-          name={name}
-          email={email}
-          handleNameChange={handleNameChange}
-          handleEmailChange={handleEmailChange}
-          handleSubmit={handleSubmit}
-          loading={loading}
-        />
+        {/* Next Section: Application Form - Title sits directly below navbar */}
+        <section
+          id="apply-form"
+          className="flex min-h-[100dvh] md:min-h-0 w-full flex-col items-center px-5 sm:px-6 lg:px-8 pt-[76px] pb-12 md:pb-16">
+          <div className="w-full max-w-4xl flex flex-col items-center">
+            <Form
+              name={name}
+              email={email}
+              platforms={platforms}
+              togglePlatform={togglePlatform}
+              joinWhatsApp={joinWhatsApp}
+              setJoinWhatsApp={setJoinWhatsApp}
+              whatsappNumber={whatsappNumber}
+              handleWhatsAppChange={handleWhatsAppChange}
+              handleNameChange={handleNameChange}
+              handleEmailChange={handleEmailChange}
+              handleSubmit={handleSubmit}
+              loading={loading}
+              errors={errors}
+            />
+          </div>
+        </section>
 
-        <Logos />
-      </section>
+        <Footer />
+      </div>
 
-      <Footer />
+      {/* Muse AI Style Success Modal with Confetti */}
+      <SuccessDialog
+        open={successDialogOpen}
+        onClose={() => setSuccessDialogOpen(false)}
+      />
 
       <Particles
-        quantityDesktop={350}
-        quantityMobile={100}
+        quantityDesktop={80}
+        quantityMobile={30}
         ease={80}
-        color={"#F7FF9B"}
+        color={"#8f9296"}
         refresh
       />
     </main>

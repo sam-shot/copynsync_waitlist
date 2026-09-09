@@ -1,15 +1,22 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Figtree } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
 
 const FigtreeFont = Figtree({ subsets: ["latin"] });
 
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
+
 export const metadata: Metadata = {
-  title: "Next.js + Notion — Waitlist Template",
+  title: "Copynsync v2 — Testing Waitlist",
   description:
-    "A simple Next.js waitlist template with Notion as CMS and Resend to send emails created with React Email and Upstash Redis for rate limiting. Deployed on Vercel.",
+    "Join the 14-day closed testing cohort for Copynsync v2. Cross-platform universal clipboard and input sync for Android and Desktop.",
 };
 
 export default function RootLayout({
@@ -37,7 +44,7 @@ export default function RootLayout({
       <meta name="twitter:image:height" content="832" />
       <body className={FigtreeFont.className}>
         {children}
-        <Toaster richColors position="top-center" />
+        <Toaster position="top-center" />
         <Analytics />
       </body>
     </html>

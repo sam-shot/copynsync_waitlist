@@ -1,46 +1,87 @@
-import { motion } from "framer-motion";
-import TextBlur from "@/components/ui/text-blur";
-import AnimatedShinyText from "@/components/ui/shimmer-text";
-import { containerVariants, itemVariants } from "@/lib/animation-variants";
+"use client";
 
-export default function CTA() {
+import { useEffect, useState } from "react";
+import Image from "next/image";
+
+interface CTAProps {
+  onApplyClick?: () => void;
+  scrolled?: boolean;
+}
+
+export default function CTA({ onApplyClick, scrolled: externalScrolled }: CTAProps) {
+  const [internalScrolled, setInternalScrolled] = useState(false);
+
+  useEffect(() => {
+    if (externalScrolled !== undefined) return;
+    const handleScroll = () => {
+      setInternalScrolled(window.scrollY > 15);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [externalScrolled]);
+
+  const scrolled = externalScrolled !== undefined ? externalScrolled : internalScrolled;
+
   return (
-    <motion.div
-      className="flex w-full max-w-2xl flex-col gap-2"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible">
-      <motion.div variants={itemVariants}>
-        <div className="flex items-center justify-center">
-          <div className="flex w-fit items-center justify-center rounded-full bg-muted/80 text-center">
-            <AnimatedShinyText className="px-4 py-1">
-              <span>Coming soon!</span>
-            </AnimatedShinyText>
-          </div>
+    <section className="relative flex h-[100dvh] w-full flex-col items-center justify-center pt-[60px] pb-6 px-5 sm:px-6 lg:px-8 select-none">
+      {/* Hero Center Lockup: App Icon, Display Headline, Subtitle, and Apply Button - All within 100dvh */}
+      <div className="flex w-full max-w-3xl flex-col items-center text-center my-auto">
+        {/* Hero App Icon (generous clearance below 60px fixed header, perfectly unclipped) */}
+        <div id="hero-app-icon" className="relative mb-5 sm:mb-6">
+          <Image
+            src="/icons/copynsync-128.png"
+            alt="Copynsync"
+            width={96}
+            height={96}
+            priority
+            className="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24 rounded-2xl object-contain drop-shadow-2xl"
+          />
         </div>
-      </motion.div>
 
-      <motion.img
-        src="/logo.svg"
-        alt="logo"
-        className="mx-auto h-24 w-24"
-        variants={itemVariants}
-      />
+        {/* Display Headline */}
+        <div className="space-y-1 mb-3 sm:mb-4">
+          <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-white leading-[1.12]">
+            Your clipboard, <br />
+            <span className="text-[#4b93ff]">
+              everywhere you work.
+            </span>
+          </h1>
+        </div>
 
-      <motion.div variants={itemVariants}>
-        <TextBlur
-          className="text-center text-3xl font-medium tracking-tighter sm:text-5xl"
-          text="A Simple Next.js Waitlist Template with Notion as CMS"
-        />
-      </motion.div>
+        {/* Clean Secondary Subtitle */}
+        <div>
+          <p className="mx-auto max-w-xl text-sm sm:text-base md:text-lg text-[#8f9296] font-normal leading-relaxed">
+            Instant, peer-to-peer clipboard synchronization across Android, macOS, Windows, and Linux.
+            Join our 14-day cohort for <strong className="font-medium text-white">free Pro access</strong> during testing plus a <strong className="font-medium text-white">1-month Pro license</strong> on launch.
+          </p>
+        </div>
+      </div>
 
-      <motion.div variants={itemVariants}>
-        <TextBlur
-          className="mx-auto max-w-[27rem] pt-1.5 text-center text-base text-zinc-300 sm:text-lg"
-          text="Join the waitlist to get early access of the product and recieve updates on the progress!"
-          duration={0.8}
-        />
-      </motion.div>
-    </motion.div>
+      {/* Muse AI Style Elevated Button: Anchored at the bottom of 100dvh, borderless, disappears smoothly on scroll */}
+      <button
+        onClick={onApplyClick}
+        type="button"
+        className={`fixed inset-x-0 bottom-6 sm:bottom-8 z-30 mx-auto w-fit group inline-flex items-center gap-1.5 rounded-full bg-[#28292d]/90 hover:bg-[#34353a] active:bg-[#202124] backdrop-blur-[16px] px-5 h-10 text-sm font-medium text-white shadow-[0_1px_0_0_rgba(255,255,255,0.18)_inset,0_4px_16px_0_rgba(0,0,0,0.35)] select-none transition-all duration-200 ease-out active:scale-[0.98] ${
+          scrolled
+            ? "opacity-0 pointer-events-none translate-y-2"
+            : "opacity-100 pointer-events-auto translate-y-0"
+        }`}>
+        <span>Apply for Closed Beta</span>
+        <svg
+          className="h-4 w-4 text-white/80 transition-transform duration-150 group-hover:translate-y-0.5"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round">
+          <path d="m6 9 6 6 6-6" />
+        </svg>
+      </button>
+    </section>
   );
 }
+
