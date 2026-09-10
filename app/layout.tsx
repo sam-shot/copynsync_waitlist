@@ -23,7 +23,7 @@ const getBaseUrl = () => {
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
-  return "https://copynsync.com";
+  return "https://copynsync.pxxl.click";
 };
 
 const siteUrl = getBaseUrl();
