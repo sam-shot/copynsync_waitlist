@@ -1,5 +1,1 @@
-import { redirect } from "next/navigation";
-
-export default function RootPage() {
-  redirect("/alpha-testing");
-}
+export { default } from "./alpha-testing/page";

@@ -49,11 +49,11 @@ export const metadata: Metadata = {
     "Linux",
     "alpha testing",
   ],
-  authors: [{ name: "Samuel Lefto", url: "https://x.com/samshot_01" }],
-  creator: "Samuel Lefto",
+  authors: [{ name: "Samuel Ademujimi", url: "https://x.com/samshot_01" }],
+  creator: "Samuel Ademujimi",
   publisher: "Copynsync",
   alternates: {
-    canonical: "/alpha-testing",
+    canonical: "/",
   },
   icons: {
     icon: [
@@ -70,17 +70,27 @@ export const metadata: Metadata = {
     title: "Copynsync — Alpha Testing Waitlist",
     description:
       "Universal clipboard sync, router-speed file transfers, notification mirroring, and mouse & keyboard sharing across Android, macOS, Windows, and Linux.",
-    url: "/alpha-testing",
+    url: siteUrl,
     siteName: "Copynsync",
     locale: "en_US",
     type: "website",
+    images: [
+      {
+        url: `${siteUrl}/opengraph-image.png`,
+        width: 1200,
+        height: 630,
+        alt: "Copynsync — Alpha Testing Waitlist",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
+    site: "@samshot_01",
+    creator: "@samshot_01",
     title: "Copynsync — Alpha Testing Waitlist",
     description:
       "Universal clipboard sync, router-speed file transfers, notification mirroring, and mouse & keyboard sharing across Android, macOS, Windows, and Linux.",
-    creator: "@samshot_01",
+    images: [`${siteUrl}/twitter-image.png`],
   },
   robots: {
     index: true,

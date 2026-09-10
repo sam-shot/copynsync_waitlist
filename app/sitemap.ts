@@ -7,10 +7,16 @@ const siteUrl =
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: `${siteUrl}/alpha-testing`,
+      url: `${siteUrl}`,
       lastModified: new Date(),
       changeFrequency: "daily",
       priority: 1,
+    },
+    {
+      url: `${siteUrl}/alpha-testing`,
+      lastModified: new Date(),
+      changeFrequency: "daily",
+      priority: 0.9,
     },
   ];
 }
