@@ -13,6 +13,7 @@ export interface FormErrors {
   email?: string;
   platforms?: string;
   whatsappNumber?: string;
+  general?: string;
 }
 
 interface FormProps {
@@ -91,6 +92,7 @@ export default function Form({
         </div>
       </div>
 
+
       <form
         onSubmit={(e) => {
           e.preventDefault();
@@ -105,7 +107,7 @@ export default function Form({
             label="Your Name"
             required
             type="text"
-            placeholder="Samuel Lefto"
+            placeholder="John Doe"
             value={name}
             onChange={handleNameChange}
             autoComplete="name"
@@ -117,7 +119,7 @@ export default function Form({
             label="Email Address"
             required
             type="email"
-            placeholder="samuel@example.com"
+            placeholder="johndoe@gmail.com"
             value={email}
             onChange={handleEmailChange}
             autoComplete="email"
@@ -144,6 +146,13 @@ export default function Form({
 
         {/* Row 4: Submit Pill Button */}
         <div className="pt-2">
+          {errors.general && (
+            <p
+              role="alert"
+              className="mb-3 rounded-2xl bg-red-500/10 px-4 py-3 text-center text-xs sm:text-sm text-red-400 font-normal">
+              {errors.general}
+            </p>
+          )}
           <Button
             type="submit"
             variant="primary"

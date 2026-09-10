@@ -6,6 +6,7 @@ import Form, { FormErrors } from "@/components/form";
 import Footer from "@/components/footer";
 import Particles from "@/components/ui/particles";
 import Header from "@/components/header";
+import { joinWaitlist } from "@/lib/waitlist";
 import SuccessDialog from "@/components/success-dialog";
 
 export default function Home() {
@@ -54,22 +55,26 @@ export default function Home() {
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
-    if (errors.email) {
-      setErrors((prev) => ({ ...prev, email: undefined }));
+    if (errors.email || errors.general) {
+      setErrors((prev) => ({ ...prev, email: undefined, general: undefined }));
     }
   };
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
-    if (errors.name) {
-      setErrors((prev) => ({ ...prev, name: undefined }));
+    if (errors.name || errors.general) {
+      setErrors((prev) => ({ ...prev, name: undefined, general: undefined }));
     }
   };
 
   const handleWhatsAppChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setWhatsappNumber(event.target.value);
-    if (errors.whatsappNumber) {
-      setErrors((prev) => ({ ...prev, whatsappNumber: undefined }));
+    if (errors.whatsappNumber || errors.general) {
+      setErrors((prev) => ({
+        ...prev,
+        whatsappNumber: undefined,
+        general: undefined,
+      }));
     }
   };
 
@@ -118,18 +123,29 @@ export default function Home() {
     setLoading(true);
 
     try {
-      // Simulate network wait / API submission
-      await new Promise((r) => setTimeout(r, 800));
+      await joinWaitlist({
+        name,
+        email,
+        platforms,
+        whatsappNumber,
+        joinWhatsapp: joinWhatsApp,
+      });
 
-      // Launch Muse AI celebration dialog
+      // Launch Muse AI celebration dialog (also for repeat signups —
+      // the API dedupes by email, so this call is idempotent)
       setSuccessDialogOpen(true);
 
       // Reset form fields
       setName("");
       setEmail("");
       setWhatsappNumber("");
-    } catch {
-      // If server error occurs
+    } catch (err) {
+      setErrors({
+        general:
+          err instanceof Error
+            ? err.message
+            : "Something went wrong. Please try again.",
+      });
     } finally {
       setLoading(false);
     }
