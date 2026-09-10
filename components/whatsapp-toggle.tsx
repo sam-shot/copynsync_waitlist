@@ -47,7 +47,7 @@ export default function WhatsAppToggle({
               Join WhatsApp Testing Group
             </p>
             <p className="text-xs sm:text-sm text-[#8f9296] leading-snug mt-0.5">
-              Daily testing feedback &amp; beta release chat
+              Daily testing feedback &amp; alpha release chat
             </p>
           </div>
         </div>

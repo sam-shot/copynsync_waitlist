@@ -82,7 +82,7 @@ export default function SuccessDialog({ open, onClose }: SuccessDialogProps) {
 
             {/* Message clarifying that downloads and invites arrive within the week */}
             <p className="text-sm sm:text-base text-[#d4d7dc] font-normal leading-relaxed mb-6">
-              We&apos;ve reserved your closed beta spot. As soon as the test build is ready <span className="text-white font-medium">(within the week)</span>, you&apos;ll receive an onboarding email with your download links, test access, and WhatsApp group invite.
+              We&apos;ve reserved your alpha testing spot. As soon as the test build is ready <span className="text-white font-medium">(within the week)</span>, you&apos;ll receive an onboarding email with your download links, test access, and WhatsApp group invite.
             </p>
 
             {/* Action Button: Rounded-full pill */}

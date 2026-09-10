@@ -83,11 +83,13 @@ const wordVariants = {
 export default function CTA({ onApplyClick, scrolled: externalScrolled }: CTAProps) {
   const [internalScrolled, setInternalScrolled] = useState(false);
   const [featureIndex, setFeatureIndex] = useState(0);
+  const [hasRotated, setHasRotated] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
+      setHasRotated(true);
       setFeatureIndex((prev) => (prev + 1) % ROTATING_FEATURES.length);
-    }, 3200);
+    }, 2800);
     return () => clearInterval(timer);
   }, []);
 
@@ -128,25 +130,25 @@ export default function CTA({ onApplyClick, scrolled: externalScrolled }: CTAPro
           <h1 className="text-[1.4rem] xs:text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-semibold tracking-tight text-white leading-[1.08] text-center w-full flex flex-col items-center">
             <span className="block w-full text-center whitespace-nowrap">Your devices in sync,</span>
             <span className="block w-full text-center min-h-[2.2em] pb-1">
-              <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait" initial={false}>
                 <motion.span
                   key={featureIndex}
-                  variants={containerVariants}
-                  initial="initial"
+                  variants={hasRotated ? containerVariants : undefined}
+                  initial={hasRotated ? "initial" : false}
                   animate="animate"
                   exit="exit"
                   className="w-full flex flex-col items-center justify-center text-center">
                   {/* Blue Line 1 (with inline icon, centered, tight) */}
                   <span className="inline-flex items-center justify-center text-center whitespace-nowrap">
                     <motion.span
-                      variants={wordVariants}
+                      variants={hasRotated ? wordVariants : undefined}
                       className="inline-block align-[-0.08em] mr-2 sm:mr-3 md:mr-3.5">
                       <CurrentIcon className="h-[0.82em] w-[0.82em] text-[#6ca8ff] stroke-[2.4]" />
                     </motion.span>
                     {CurrentFeature.line1.split(" ").map((word, i) => (
                       <motion.span
                         key={`l1-${i}`}
-                        variants={wordVariants}
+                        variants={hasRotated ? wordVariants : undefined}
                         className="inline-block mr-[0.28em] bg-gradient-to-b from-[#6ca8ff] to-[#256beb] bg-clip-text text-transparent pb-1">
                         {word}
                       </motion.span>
@@ -158,7 +160,7 @@ export default function CTA({ onApplyClick, scrolled: externalScrolled }: CTAPro
                     {CurrentFeature.line2.split(" ").map((word, i) => (
                       <motion.span
                         key={`l2-${i}`}
-                        variants={wordVariants}
+                        variants={hasRotated ? wordVariants : undefined}
                         className="inline-block mr-[0.28em] bg-gradient-to-b from-[#6ca8ff] to-[#256beb] bg-clip-text text-transparent pb-1">
                         {word}
                       </motion.span>
@@ -206,7 +208,7 @@ export default function CTA({ onApplyClick, scrolled: externalScrolled }: CTAPro
             ? "opacity-0 pointer-events-none translate-y-2"
             : "opacity-100 pointer-events-auto translate-y-0"
         }`}>
-        Apply for Closed Beta
+        Apply for Alpha Access
       </Button>
     </section>
   );

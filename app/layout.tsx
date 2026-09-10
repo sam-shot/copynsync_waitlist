@@ -10,12 +10,76 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  themeColor: "#181819",
 };
 
 export const metadata: Metadata = {
-  title: "Copynsync v2 — Closed Beta Testing",
+  metadataBase: new URL("https://copynsync.com"),
+  title: "Copynsync — Alpha Testing Waitlist",
   description:
-    "Apply for closed beta testing for Copynsync v2. Peer-to-peer clipboard sync, high-speed file transfers, notification mirroring, and input sharing across Android, macOS, Windows, and Linux.",
+    "Join closed alpha testing for Copynsync. Peer-to-peer clipboard sync, router-speed file transfers, notification mirroring, and mouse & keyboard sharing across Android, macOS, Windows, and Linux.",
+  applicationName: "Copynsync",
+  keywords: [
+    "Copynsync",
+    "clipboard sync",
+    "file transfer",
+    "notification mirroring",
+    "mouse sharing",
+    "cross-platform sync",
+    "local network",
+    "P2P",
+    "Android",
+    "macOS",
+    "Windows",
+    "Linux",
+    "alpha testing",
+  ],
+  authors: [{ name: "Samuel Lefto", url: "https://x.com/samshot_01" }],
+  creator: "Samuel Lefto",
+  publisher: "Copynsync",
+  alternates: {
+    canonical: "/alpha-testing",
+  },
+  icons: {
+    icon: [
+      { url: "/icons/copynsync-128.png", sizes: "128x128", type: "image/png" },
+      { url: "/icons/copynsync-64.png", sizes: "64x64", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: [
+      { url: "/icons/copynsync-128.png", sizes: "128x128", type: "image/png" },
+    ],
+    shortcut: "/icons/copynsync-128.png",
+  },
+  openGraph: {
+    title: "Copynsync — Alpha Testing Waitlist",
+    description:
+      "Universal clipboard sync, router-speed file transfers, notification mirroring, and mouse & keyboard sharing across Android, macOS, Windows, and Linux.",
+    url: "https://copynsync.com/alpha-testing",
+    siteName: "Copynsync",
+    locale: "en_US",
+    type: "website",
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Copynsync — Alpha Testing Waitlist",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Copynsync — Alpha Testing Waitlist",
+    description:
+      "Universal clipboard sync, router-speed file transfers, notification mirroring, and mouse & keyboard sharing across Android, macOS, Windows, and Linux.",
+    creator: "@samshot_01",
+    images: ["/twitter-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -25,22 +89,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
-      <meta property="og:image" content="/opengraph-image.png" />
-      <meta property="og:image:type" content="image/png" />
-      <meta property="og:image:width" content="1280" />
-      <meta property="og:image:height" content="832" />
-      <meta
-        property="og:site_name"
-        content="Copynsync — Closed Beta Testing"
-      />
-      <meta
-        property="og:url"
-        content="https://copynsync.com"
-      />
-      <meta name="twitter:image" content="/twitter-image.png" />
-      <meta name="twitter:image:type" content="image/png" />
-      <meta name="twitter:image:width" content="1280" />
-      <meta name="twitter:image:height" content="832" />
+      <head>
+        <link rel="icon" type="image/png" sizes="128x128" href="/icons/copynsync-128.png" />
+        <link rel="icon" type="image/png" sizes="64x64" href="/icons/copynsync-64.png" />
+        <link rel="apple-touch-icon" href="/icons/copynsync-128.png" />
+      </head>
       <body className={FigtreeFont.className}>
         {children}
         <Analytics />

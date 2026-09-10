@@ -52,7 +52,7 @@ export default function Form({
       {/* Section Header */}
       <div className="text-center mb-5 sm:mb-6 flex flex-col items-center">
         <h2 className="text-2xl sm:text-3xl font-medium tracking-tight text-white">
-          Apply for Closed Beta Access
+          Apply for Alpha Testing Access
         </h2>
         <p className="mt-2 max-w-xl text-sm sm:text-base text-[#aeb2b8] font-normal leading-relaxed">
           Help us test and refine Copynsync before public release. In exchange for your daily testing and feedback, you&apos;ll receive full Pro privileges.
@@ -159,7 +159,7 @@ export default function Form({
             size="lg"
             fullWidth
             loading={loading}>
-            Apply for Beta Access
+            Apply for Alpha Access
           </Button>
         </div>
       </form>
