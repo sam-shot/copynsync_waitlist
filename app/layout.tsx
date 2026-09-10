@@ -13,8 +13,23 @@ export const viewport: Viewport = {
   themeColor: "#181819",
 };
 
+const getBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_SITE_URL) {
+    return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
+  }
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) {
+    return `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`;
+  }
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`;
+  }
+  return "https://copynsync.com";
+};
+
+const siteUrl = getBaseUrl();
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://copynsync.com"),
+  metadataBase: new URL(siteUrl),
   title: "Copynsync — Alpha Testing Waitlist",
   description:
     "Join closed alpha testing for Copynsync. Peer-to-peer clipboard sync, router-speed file transfers, notification mirroring, and mouse & keyboard sharing across Android, macOS, Windows, and Linux.",
@@ -55,18 +70,10 @@ export const metadata: Metadata = {
     title: "Copynsync — Alpha Testing Waitlist",
     description:
       "Universal clipboard sync, router-speed file transfers, notification mirroring, and mouse & keyboard sharing across Android, macOS, Windows, and Linux.",
-    url: "https://copynsync.com/alpha-testing",
+    url: "/alpha-testing",
     siteName: "Copynsync",
     locale: "en_US",
     type: "website",
-    images: [
-      {
-        url: "/opengraph-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Copynsync — Alpha Testing Waitlist",
-      },
-    ],
   },
   twitter: {
     card: "summary_large_image",
@@ -74,7 +81,6 @@ export const metadata: Metadata = {
     description:
       "Universal clipboard sync, router-speed file transfers, notification mirroring, and mouse & keyboard sharing across Android, macOS, Windows, and Linux.",
     creator: "@samshot_01",
-    images: ["/twitter-image.png"],
   },
   robots: {
     index: true,
